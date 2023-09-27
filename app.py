@@ -1,8 +1,9 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from model import get_response
 
 app = Flask(__name__)
-
+CORS(app)
 @app.route("/", methods=["GET"])
 def index():
     return "Namami Gange RetrievalQA chain"
@@ -12,14 +13,15 @@ def chat():
     query = request.json['query']
     
     if (len(query) > 500):
-        return {'query': query, 'response': "ERROR: query too long"}, 404
-
-    response = jsonify({
+        response = jsonify({'query': query, 'response': "ERROR: query too long"})
+        status_code = 404
+    else:
+        response = jsonify({
         'query': query,
         'response': get_response(query)
     })
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    return response
+        status_code = 200
+    return response, status_code
 
 if __name__ == '__main__':
     app.run()
