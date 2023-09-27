@@ -1,5 +1,4 @@
 from flask import Flask, request, jsonify
-from markupsafe import escape
 from model import get_response
 
 app = Flask(__name__)
