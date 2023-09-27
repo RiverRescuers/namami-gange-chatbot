@@ -1,10 +1,8 @@
-from flask import Flask, request
-from flask_cors import CORS
+from flask import Flask, request, jsonify
 from markupsafe import escape
 from model import get_response
 
 app = Flask(__name__)
-CORS(app)
 
 @app.route("/", methods=["GET"])
 def index():
@@ -17,10 +15,12 @@ def chat():
     if (len(query) > 500):
         return {'query': query, 'response': "ERROR: query too long"}, 404
 
-    return {
+    response = jsonify({
         'query': query,
-        'response': escape(get_response(query[:100]))
-    }
+        'response': get_response(query)
+    })
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 if __name__ == '__main__':
     app.run()
