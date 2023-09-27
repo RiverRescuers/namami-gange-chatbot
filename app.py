@@ -15,7 +15,7 @@ def index():
 def chat():
     query = request.json["query"]
 
-    if len(query) > 500:
+    if query and len(query) > 500:
         response = jsonify({"query": query, "response": "ERROR: query too long"})
         status_code = 404
     else:
@@ -29,7 +29,7 @@ def test_chat():
     args = request.args
     query = args.get("query")
 
-    if len(query) > 500:
+    if query and len(query) > 500:
         response = jsonify({"query": query, "response": "ERROR: query too long"})
         status_code = 404
     else:
