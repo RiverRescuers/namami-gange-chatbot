@@ -30,10 +30,10 @@ def test_chat():
     query = args.get("query")
 
     if query and len(query) > 500:
-        response = "ERROR: query too long"
+        response = jsonify({"query": query, "respone": "ERROR: query too long"})
         status_code = 404
     else:
-        response = get_response(query)
+        response = jsonify({"query": query, "respone": get_response(query)})
         status_code = 200
     return response, status_code
 
