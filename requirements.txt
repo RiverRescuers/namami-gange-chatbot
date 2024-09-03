@@ -7,4 +7,4 @@ openai==0.28.1
 regex==2023.8.8
 tiktoken==0.5.1
 gunicorn==22.0.0
-flask_cors==4.0.0
+flask_cors==5.0.0
